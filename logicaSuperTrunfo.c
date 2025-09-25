@@ -66,7 +66,7 @@ int main() {
     printf("Digite a área em quilômetros quadrados da cidade: ");
     scanf("%f", &kms_quadrados[1]); 
 
-    printf("Digite o PIB da cidade: ");
+    printf("Digite o PIB da cidade em bilhões de reais (Ex: 50): ");
     scanf("%f", &pib[1]);
 
     printf("Digite o número de pontos turísticos da cidade: ");
@@ -133,45 +133,75 @@ int main() {
 
     printf("Comparando as cartas...\n");
 
-    float inversoDensidade1 = (densidade_1 != 0) ? (1.0F / densidade_1) : 0.0F;
-    float inversoDensidade2 = (densidade_2 != 0) ? (1.0F / densidade_2) : 0.0F;
+    printf("Digite qual atributo deseja comparar:\n");
+    printf("1 - População\n");
+    printf("2 - Área em km²\n");
+    printf("3 - PIB (em bilhões de reais)\n");
+    printf("4 - Pontos turísticos\n");
+    printf("5 - Densidade Populacional (hab/km²)\n");
+    printf("6 - PIB per Capita (R$)\n");
+    printf("Digite o atributo escolhido: ");
 
-    float superPoder1 = (float)populacao[0] + kms_quadrados[0] + pib[0] + (float)pontos_turisticos[0] + calculo_pib_1 + inversoDensidade1;
-    float superPoder2 = (float)populacao[1] + kms_quadrados[1] + pib[1] + (float)pontos_turisticos[1] + calculo_pib_2 + inversoDensidade2;
+    int atributo_escolhido;
+    scanf("%d", &atributo_escolhido);
 
-    printf("Atributo: População\n");
-    printf("Carta 1 - %s: %lu\n", nome_da_cidade[0], populacao[0]);
-    printf("Carta 2 - %s: %lu\n", nome_da_cidade[1], populacao[1]);
-
-    if (populacao[0] > populacao[1]) {
-        printf("Resultado: Carta %d (%s) venceu!\n", 1, nome_da_cidade[0]);
-    } else {
-        printf("Resultado: Carta %d (%s) venceu!\n", 2, nome_da_cidade[1]);
+    switch (atributo_escolhido) {
+        case 1:
+        if (populacao[0] > populacao[1]) {
+            printf("A carta vencedora é: %s com população de %lu\n", nome_da_cidade[0], populacao[0]);
+        } else if (populacao[0] < populacao[1]) {
+            printf("A carta vencedora é: %s com população de %lu\n", nome_da_cidade[1], populacao[1]);
+        } else {
+            printf("Empate! Ambas as cidades têm a mesma população de %lu\n", populacao[0]);
+        }
+        break;
+        case 2:
+        if (kms_quadrados[0] > kms_quadrados[1]) {
+            printf("A carta vencedora é: %s com área de %.2f km²\n", nome_da_cidade[0], kms_quadrados[0]);
+        } else if (kms_quadrados[0] < kms_quadrados[1]) {
+            printf("A carta vencedora é: %s com área de %.2f km²\n", nome_da_cidade[1], kms_quadrados[1]);
+        } else {
+            printf("Empate! Ambas as cidades têm a mesma área de %.2f km²\n", kms_quadrados[0]);
+        }
+        break;
+        case 3:
+        if (pib[0] > pib[1]) {
+            printf("A carta vencedora é: %s com PIB de %.2f bilhões de reais\n", nome_da_cidade[0], pib[0]);
+        } else if (pib[0] < pib[1]) {            
+            printf("A carta vencedora é: %s (Cidade 2) com PIB de %.2f bilhões de reais\n", nome_da_cidade[1], pib[1]);
+        } else {
+            printf("Empate! Ambas as cidades têm o mesmo PIB de %.2f bilhões de reais\n", pib[0]);
+        }
+        break;
+        case 4:
+        if (pontos_turisticos[0] > pontos_turisticos[1]) {
+            printf("A carta vencedora é: %s com %d pontos turísticos\n", nome_da_cidade[0], pontos_turisticos[0]);
+        } else if (pontos_turisticos[0] < pontos_turisticos[1]) {
+            printf("A carta vencedora é: %s com %d pontos turísticos\n", nome_da_cidade[1], pontos_turisticos[1]);
+        } else {
+            printf("Empate! Ambas as cidades têm o mesmo número de pontos turísticos: %d\n", pontos_turisticos[0]);
+        }
+        break;
+        case 5:
+        if (densidade_1 < densidade_2) {
+            printf("A carta vencedora é: %s com densidade populacional de %.2f hab/km²\n", nome_da_cidade[0], densidade_1);
+        } else if (densidade_1 > densidade_2) {
+            printf("A carta vencedora é: %s com densidade populacional de %.2f hab/km²\n", nome_da_cidade[1], densidade_2);
+        } else {
+            printf("Empate! Ambas as cidades têm a mesma densidade populacional de %.2f hab/km²\n", densidade_1);
+        }
+        break;
+        case 6:
+        if (calculo_pib_1 > calculo_pib_2) {
+            printf("A carta vencedora é: %s com PIB per capita de R$ %.2f\n", nome_da_cidade[0], calculo_pib_1);
+        } else if (calculo_pib_1 < calculo_pib_2) {
+            printf("A carta vencedora é: %s com PIB per capita de R$ %.2f\n", nome_da_cidade[1], calculo_pib_2);
+        } else {
+            printf("Empate! Ambas as cidades têm o mesmo PIB per capita de R$ %.2f\n", calculo_pib_1);
+        }
+        break;
+        default:
+        printf("Opção inválida!\n");
     }
-
-    printf("Área: Carta %d venceu (%d)\n", 
-           (kms_quadrados[0] > kms_quadrados[1]) ? 1 : 2, 
-           (kms_quadrados[0] > kms_quadrados[1]) ? 1 : 0);
-
-    printf("PIB: Carta %d venceu (%d)\n", 
-           (pib[0] > pib[1]) ? 1 : 2, 
-           (pib[0] > pib[1]) ? 1 : 0);
-
-    printf("Pontos Turísticos: Carta %d venceu (%d)\n", 
-           (pontos_turisticos[0] > pontos_turisticos[1]) ? 1 : 2, 
-           (pontos_turisticos[0] > pontos_turisticos[1]) ? 1 : 0);
-
-    printf("Densidade Populacional: Carta %d venceu (%d)\n", 
-           (densidade_1 < densidade_2) ? 1 : 2, 
-           (densidade_1 < densidade_2) ? 1 : 0);
-
-    printf("PIB per Capita: Carta %d venceu (%d)\n", 
-           (calculo_pib_1 > calculo_pib_2) ? 1 : 2, 
-           (calculo_pib_1 > calculo_pib_2) ? 1 : 0);
-
-    printf("Super Poder: Carta %d venceu (%d)\n", 
-           (superPoder1 > superPoder2) ? 1 : 2, 
-           (superPoder1 > superPoder2) ? 1 : 0);
-
     return 0;
 }
